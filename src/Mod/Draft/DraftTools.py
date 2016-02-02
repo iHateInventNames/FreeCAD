@@ -274,6 +274,9 @@ class DraftTool:
         "stores actions to be committed to the FreeCAD document"
         self.commitList.append((name,func))
 
+    def undo(self):
+        self.commitList.pop()
+
     def getStrings(self,addrot=None):
         "returns a couple of useful strings fro building python commands"
 
@@ -605,7 +608,16 @@ class Wire(Line):
                     return
 
         Line.Activated(self,name=translate("draft","DWire"))
+        if self.doc:
+            self.wireTrack = wireTracker()
 
+    def undolast(self):
+        "undoes last line segment"
+        if (len(self.node) > 1):
+            self.node.pop()
+            newshape = Part.Wire(self.node).toShape()
+            self.obj.Shape = newshape
+            msg(translate("draft", "Last point has been removed\n"))
 
 class BSpline(Line):
     "a FreeCAD command for creating a b-spline"
