@@ -464,7 +464,7 @@ int SMESH_MeshEditor::Remove (const list< int >& theIDs,
 /*!
  * \brief Create 0D elements on all nodes of the given object except those
  *        nodes on which a 0D element already exists.
- *  \param elements - Elements on whose nodes to create 0D elements; if empty, 
+ *  \param elements - Elements on whose nodes to create 0D elements; if empty,
  *                    the all mesh is treated
  *  \param all0DElems - returns all 0D elements found or created on nodes of \a elements
  */
@@ -631,7 +631,7 @@ static int nbEdgeConnectivity(const SMDS_MeshNode* theNode)
 
 //=======================================================================
 //function : getNodesFromTwoTria
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 static bool getNodesFromTwoTria(const SMDS_MeshElement * theTria1,
@@ -862,7 +862,7 @@ static bool findTriangles(const SMDS_MeshNode *    theNode1,
       {
         theTria1 = elem;
       }
-      else  
+      else
       {
         theTria2 = elem;
         // theTria1 must be element with minimum ID
@@ -1602,7 +1602,7 @@ void SMESH_MeshEditor::QuadTo4Tri (TIDSortedElemSet & theElems)
     // create 4 triangles
 
     GetMeshDS()->RemoveFreeElement( quad, subMeshDS, /*fromGroups=*/false );
-    
+
     helper.SetIsQuadratic  ( nodes.size() > 4 );
     helper.SetIsBiQuadratic( nodes.size() == 9 );
     if ( helper.GetIsQuadratic() )
@@ -2455,7 +2455,7 @@ void SMESH_MeshEditor::SplitVolumes (const TFacetOfElem & theElems,
           GetMeshDS()->RemoveNode( volNodes[i] );
     }
   } // loop on volumes to split
-  
+
   myLastCreatedNodes = newNodes;
   myLastCreatedElems = newElems;
 }
@@ -2612,7 +2612,7 @@ void SMESH_MeshEditor::GetHexaFacetsToSplit( TIDSortedElemSet& theHexas,
       fIt = facetsToCheck.begin();
 
       vTool.Set( hex );
-      if ( vTool.IsFreeFace( lateralFacet, &curHex ) || 
+      if ( vTool.IsFreeFace( lateralFacet, &curHex ) ||
            curHex->GetGeomType() != SMDSGeom_HEXA )
         continue;
       if ( !allHex && !theHexas.count( curHex ))
@@ -4592,7 +4592,7 @@ void SMESH_MeshEditor::sweepElement(const SMDS_MeshElement*               elem,
         std::swap( itNN[0],    itNN[1] );
         std::swap( prevNod[0], prevNod[1] );
         std::swap( nextNod[0], nextNod[1] );
-	
+
         std::swap( isSingleNode[0], isSingleNode[1] );
         if ( nbSame > 0 )
           sames[0] = 1 - sames[0];
@@ -7172,7 +7172,7 @@ SMESH_MeshEditor::generateGroups(const SMESH_SequenceOfElemPtr& nodeGens,
  *  \param [in,out] theNodes - the nodes to treat
  *  \param [in]     theTolerance - the tolerance
  *  \param [out]    theGroupsOfNodes - the result groups of coincident nodes
- *  \param [in]     theSeparateCornersAndMedium - if \c true, in quadratic mesh puts 
+ *  \param [in]     theSeparateCornersAndMedium - if \c true, in quadratic mesh puts
  *         corner and medium nodes in separate groups
  */
 //================================================================================
@@ -7432,7 +7432,7 @@ void SMESH_MeshEditor::MergeNodes (TListOfListOfNodes & theGroupsOfNodes)
             SMDS_MeshCell::applyInterlace // interlace medium and corner nodes
               ( SMDS_MeshCell::interlacedSmdsOrder( SMDSEntity_Quad_Polygon, nbNodes ), curNodes );
 #else
-            throw SALOME_Exception("Quadratic polygon not supported with VTK <6.2");  
+            throw SALOME_Exception("Quadratic polygon not supported with VTK <6.2");
 #endif
           }
 
@@ -7462,7 +7462,7 @@ void SMESH_MeshEditor::MergeNodes (TListOfListOfNodes & theGroupsOfNodes)
                     ( SMDS_MeshCell::interlacedSmdsOrder( SMDSEntity_Quad_Polygon,
                                                           nbNewNodes ), face_nodes );
 #else
-                throw SALOME_Exception("Quadratic polygon not supported with VTK <6.2");  
+                throw SALOME_Exception("Quadratic polygon not supported with VTK <6.2");
 #endif
               }
               elemType.SetPoly(( nbNewNodes / ( elemType.myIsQuad + 1 ) > 4 ));
@@ -8540,8 +8540,8 @@ SMESH_MeshEditor::SewFreeBorder (const SMDS_MeshNode* theBordFirstNode,
   // sew the border to the side 2
   // ============================
 
-  int nbNodes[]  = { (int)nSide[0].size(), (int)nSide[1].size() };
-  int maxNbNodes = Max( nbNodes[0], nbNodes[1] );
+  size_t nbNodes[]  = { nSide[0].size(), nSide[1].size() };
+  size_t maxNbNodes = std::max( nbNodes[0], nbNodes[1] );
 
   bool toMergeConformal = ( nbNodes[0] == nbNodes[1] );
   if ( toMergeConformal && toCreatePolygons )
@@ -9434,7 +9434,7 @@ void SMESH_MeshEditor::ConvertToQuadratic(const bool theForce3d, const bool theT
     {
       const SMDS_MeshFace* face = aFaceItr->next();
       if ( !face ) continue;
-      
+
       const SMDSAbs_EntityType type = face->GetEntityType();
       bool alreadyOK;
       switch( type )
@@ -12736,7 +12736,7 @@ int SMESH_MeshEditor::MakeBoundaryMesh(const TIDSortedElemSet& elements,
                                                                    missType,
                                                                    /*noMedium=*/false))
           continue;
-        SMDS_MeshElement* newElem = 
+        SMDS_MeshElement* newElem =
           tgtEditor.AddElement( nodes, elemKind.SetPoly( nodes.size()/(iQuad+1) > 4 ));
         nbAddedBnd += bool( newElem );
 
