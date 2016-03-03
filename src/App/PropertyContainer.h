@@ -159,6 +159,10 @@ public:
   virtual void addDynamicProperties(const PropertyContainer*) {
   }
 
+  virtual DocumentObject* getObject() const {
+	  return nullptr;
+  }
+
   virtual void Save (Base::Writer &writer) const;
   virtual void Restore(Base::XMLReader &reader);
 

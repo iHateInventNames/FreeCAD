@@ -224,11 +224,7 @@ bool Document::setEdit(Gui::ViewProvider* p, int ModNum)
         resetEdit();
 
     // is it really a ViewProvider of this document?
-    ViewProviderDocumentObject* vp = dynamic_cast<ViewProviderDocumentObject*>(p);
-    if (!vp)
-        return false;
-
-    if (d->_ViewProviderMap.find(vp->getObject()) == d->_ViewProviderMap.end())
+    if (d->_ViewProviderMap.find(p->getObject()) == d->_ViewProviderMap.end())
         return false;
 
     View3DInventor *activeView = dynamic_cast<View3DInventor *>(getActiveView());
